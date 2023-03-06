@@ -1,5 +1,5 @@
 /*
-  Fetch API P4: Get Data from External API
+  Fetch API P5: POST Method
 
 */
 
@@ -16,7 +16,6 @@ function getText() {
     })
     .catch((err) => console.log(err))
 }
-
 getTextBtn.addEventListener('click', getText)
 
 function getUsers() {
@@ -36,10 +35,8 @@ function getUsers() {
       document.getElementById('output').innerHTML = output
     })
 }
-
 getUsersBtn.addEventListener('click', getUsers)
 
-// (1)
 function getPosts() {
   fetch('https://jsonplaceholder.typicode.com/posts')
     .then((res) => res.json())
@@ -56,6 +53,27 @@ function getPosts() {
       document.getElementById('output').innerHTML = output
     })
 }
+getPostsBtn.addEventListener('click', getPosts)
+
+// (1) After Add > click on "Get JSON" button
+function addPost(e) {
+  e.preventDefault()
+
+  let title = document.getElementById('title').value
+  let body = document.getElementById('body').value
+
+  // (***) need to have method + headers options + body > body must be string: JSON.stringify()
+  fetch('https://jsonplaceholder.typicode.com/posts', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({ title: title, body: body }),
+  })
+    .then((res) => res.json())
+    .then((data) => console.log(data))
+}
 
 // (2)
-getPostsBtn.addEventListener('click', getPosts)
+addPostBtn.addEventListener('submit', addPost)
