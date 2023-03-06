@@ -1,23 +1,45 @@
 /*
-  Async JS: Parallel Promise P3
-  - Promise.race()
+  Async JS: Async/Await P1
+  - another way to consume promises
+
 */
 
-const p1 = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    console.log('Async Operation 1...')
-    resolve(1)
-  }, 2000)
-})
+console.log('Before')
 
-const p2 = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    console.log('Async Operation 2...')
-    resolve(2)
-  }, 2000)
-})
+// (1) need to be in function, because we have to "async" keyword
+async function run() {
+  const user = await getUser(1)
+  console.log(user)
+}
+console.log('After')
 
-// (***) sometimes, we want to do something right after one promise is completed > Promise.race()
-Promise.race([p1, p2])
-  .then((results) => console.log(results))
-  .catch((err) => console.log(err))
+// (2)
+run()
+
+function getUser(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('Reading a User from database...')
+      resolve({ id, githubUser: 'Joe' })
+    }, 2000)
+  })
+}
+
+function getRepositories(user) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('Getting Repositories...')
+      resolve(['repo1', 'repo2', 'repo3'])
+    }, 2000)
+  })
+}
+
+function getCommits(repo) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('Getting Commits...')
+      resolve(['commit 1', 'commit 2', 'commit 3', 'commit 4'])
+      // reject(new Error('Something went wrong. Cannot get the commits ...'))
+    }, 2000)
+  })
+}
