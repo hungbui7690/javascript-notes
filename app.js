@@ -1,15 +1,19 @@
 /*
-  Dynamic Object Keys P2: Square Brackets Notation
+  Dynamic Object Keys P3: Variables
+
 */
 
 // (1)
-const person = {
-  name: 'joe',
-}
-console.log(person['name'])
+let appState = 'loading'
+appState = 'error'
 
 // (2)
-const items = {
-  'featured-items': ['item1', 'item2'],
+const app = {
+  [appState]: true,
 }
-console.log(items['featured-items'])
+console.log(app) // {error: true}
+
+// (3)
+const keyName = 'computer'
+app[keyName] = 'apple'
+console.log(app) // {error: true, computer: 'apple'}
