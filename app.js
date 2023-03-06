@@ -1,19 +1,24 @@
 /*
-  Async JS: Async/Await P1
-  - another way to consume promises
+  Async JS: Async/Await P2
+  - use try/catch when using Async/Await
 
 */
 
 console.log('Before')
 
-// (1) need to be in function, because we have to "async" keyword
+// (***) use try/catch to catch error
 async function run() {
-  const user = await getUser(1)
-  console.log(user)
+  try {
+    const user = await getUser(1)
+    const repos = await getRepositories(user)
+    const commits = await getCommits(repos)
+    console.log(commits)
+  } catch (error) {
+    console.log(error)
+  }
 }
 console.log('After')
 
-// (2)
 run()
 
 function getUser(id) {
@@ -38,8 +43,8 @@ function getCommits(repo) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       console.log('Getting Commits...')
-      resolve(['commit 1', 'commit 2', 'commit 3', 'commit 4'])
-      // reject(new Error('Something went wrong. Cannot get the commits ...'))
+      // resolve(['commit 1', 'commit 2', 'commit 3', 'commit 4'])
+      reject(new Error('Something went wrong. Cannot get the commits ...'))
     }, 2000)
   })
 }
