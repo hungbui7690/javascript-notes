@@ -1,37 +1,31 @@
 /*
-  Async JS: Replace Callbacks with Promise
-
-  (1) return new Promise()
-  (4) we can see that, it does not work here > to consume promise, we need to use .then() & .catch > cannot use callback
+  Async JS: Consume Promise
 
 */
 
 console.log('Before')
 
-// (4) we can see that, it does not work here > to consume promise, we need to use .then() & .catch
-getUser(1, (user) => {
-  getRepositories(user, (repo) => {
-    getCommits(repo, (commit) => {
-      console.log(commit)
-    })
+// (***) need to have return keyword when using code block { } > return values will be passed to next .then() > otherwise, error
+getUser(1)
+  .then((user) => getRepositories(user.githubUser))
+  .then((repo) => {
+    console.log(repo)
+    return getCommits(repo)
   })
-})
+  .then((commit) => console.log(commit))
+  .catch((err) => console.log(err))
+
 console.log('After')
 
-// (1)
 function getUser(id) {
-  // [a] return Promise + remove callback param
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       console.log('Reading a User from database...')
-
-      // [b] change to resolve()
       resolve({ id, githubUser: 'Joe' })
     }, 2000)
   })
 }
 
-// (2) do similar to getUser
 function getRepositories(user) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -41,12 +35,12 @@ function getRepositories(user) {
   })
 }
 
-// (3) do similar to getUser
 function getCommits(repo) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       console.log('Getting Commits...')
-      resolve(['commit 1', 'commit 2', 'commit 3', 'commit 4'])
+      // resolve(['commit 1', 'commit 2', 'commit 3', 'commit 4'])
+      reject(new Error('Something went wrong. Cannot get the commits ...'))
     }, 2000)
   })
 }
