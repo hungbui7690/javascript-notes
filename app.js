@@ -1,10 +1,15 @@
 /*
-  Dynamic Object Keys P1: Dot Notation
+  Dynamic Object Keys P2: Square Brackets Notation
 */
 
+// (1)
 const person = {
-  name: 'john',
+  name: 'joe',
 }
+console.log(person['name'])
 
-// dot notation
-console.log(person.name)
+// (2)
+const items = {
+  'featured-items': ['item1', 'item2'],
+}
+console.log(items['featured-items'])
