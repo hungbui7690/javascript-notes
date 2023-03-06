@@ -1,5 +1,5 @@
 /*
-  FormData API P5: Common Methods
+  FormData API P7: Convert FormData to Object
 */
 
 const form = document.querySelector('.form')
@@ -9,22 +9,10 @@ form.addEventListener('submit', (e) => {
 
   const formData = new FormData(e.currentTarget)
 
-  // (1) get by "name attribute"
-  const name = formData.get('name')
-  console.log(name)
+  // (***)
+  formData.append('test', 1234)
 
-  const x = formData.get('x')
-  console.log(x) // returns null since "x attribute" does not exist
-
-  // (2) add()
-  formData.append('age', 26)
-  console.log(formData.get('age'))
-
-  // (3) delete()
-  formData.delete('age')
-  console.log([...formData.keys()])
-
-  // (4) has()
-  console.log(formData.has('name'))
-  console.log(formData.has('x'))
+  // (***) convert to object > we can use this to send data to server using Axios or fetch()
+  const formObject = Object.fromEntries(formData)
+  console.log(formObject)
 })
