@@ -1,16 +1,21 @@
 /*
-  Async JS: Settle Promises
-  - we don't use new Promise(resolve, reject)
+  Async JS: Parallel Promise P1
+  - Promise.all([x1, x2])
 */
 
-// (***) we use class Promise.resolve()
-const p1 = Promise.resolve({ id: 1 })
-p1.then((result) => console.log(result))
+const p1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    console.log('Async Operation 1...')
+    resolve(1)
+  }, 2000)
+})
 
-// (***) when we reject, we should use new Error
-const p2 = Promise.reject(new Error('p2: Something went wrong...'))
-p2.catch((err) => console.log(err))
+const p2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    console.log('Async Operation 2...')
+    resolve(2)
+  }, 2000)
+})
 
-// (***) reject WITHOUT new Error > no call stack
-const p3 = Promise.reject('p3: Something went wrong...')
-p3.catch((err) => console.log(err))
+// (***) results is the combination of p1 & p2 > array
+Promise.all([p1, p2]).then((results) => console.log(results))
