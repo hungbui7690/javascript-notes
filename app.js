@@ -1,5 +1,5 @@
 /*
-  FormData API P2: Why
+  FormData API P3
 */
 
 const form = document.querySelector('.form')
@@ -12,15 +12,11 @@ const passwordInput = document.querySelector('.password-input')
 form.addEventListener('submit', (e) => {
   e.preventDefault()
 
-  // (***) to get the values, we must go through many steps
-  const nameValue = nameInput.value
-  const emailValue = emailInput.value
-  const passwordValue = passwordInput.value
+  // (1) create formData that links to the form
+  const formData = new FormData(e.currentTarget)
+  console.log(formData) // this object has many helper functions (similar to array) to help us work with form easily
 
-  console.log(nameValue, emailValue, passwordValue)
-
-  // (***)
-  nameInput.value = ''
-  emailInput.value = ''
-  passwordInput.value = ''
+  // (2)
+  const values = formData.values() // return iterators
+  console.log([...values])
 })
