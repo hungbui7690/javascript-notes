@@ -1,5 +1,5 @@
 /*
-  Axios P12: Cancellation 1
+  Axios P13: Cancellation 2
   
   - Setting the timeout property in an axios call handles response related timeouts.
 
@@ -18,13 +18,11 @@ const controller = new AbortController()
 function cancellation() {
   axios
     .get('/foo/bar', {
-      signal: controller.signal,
+      signal: AbortSignal.timeout(5000), //Aborts request after 5 seconds
     })
     .then(function (response) {
       //...
     })
-  // cancel the request
-  controller.abort()
 }
 
 document.getElementById('cancel').addEventListener('click', cancellation)
