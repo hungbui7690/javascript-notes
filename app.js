@@ -1,17 +1,14 @@
 /*
-  Axios P2: GET Method
+  Axios P3: GET Method
   
 */
 
-// GET REQUEST
+// (***) we add the param directly to URL
 function getTodos() {
-  axios({
-    method: 'get',
-    url: 'https://jsonplaceholder.typicode.com/todos',
-    params: {
-      _limit: 5, // param
-    },
-  })
+  axios
+    .get('https://jsonplaceholder.typicode.com/todos?_limit=5', {
+      timeout: 5000,
+    })
     .then((res) => showOutput(res))
     .catch((err) => console.error(err))
 }
