@@ -1,6 +1,9 @@
 /*
-  Intersection Observer P5: unobserve()
+  Intersection Observer P6: rootMargin
+  > rootMargin: '-100px'
 
+
+  (***) rootMargin: '100px': 100px away > out of sight > we need to use inspector to check
 */
 
 const cards = document.querySelectorAll('.card')
@@ -9,12 +12,9 @@ const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       entry.target.classList.toggle('show', entry.isIntersecting)
-
-      // (***) if the entry is shown > don't observer again > remove from observer
-      if (entry.isIntersecting) observer.unobserve(entry.target)
     })
   },
-  { threshold: 0.8 }
+  { rootMargin: '100px' } // (***) we say that the container now is 100px smaller than normal container
 )
 
 cards.forEach((card) => {
