@@ -1,12 +1,16 @@
 /*
-  Axios P16: Axios Instance
+  Axios P17: Alter Axios Instance
 
 */
 
-// AXIOS INSTANCE
+// Set config defaults when creating the instance
 const axiosInstance = axios.create({
-  baseURL: 'https://jsonplaceholder.typicode.com',
+  baseURL: 'https://jsonplaceholder.typicode.com/posts',
 })
 
+// Alter defaults after instance has been created
+axiosInstance.defaults.headers.common['Authorization'] = '12345x'
+axiosInstance.defaults.baseURL = 'https://jsonplaceholder.typicode.com/todos'
+
 // when using baseURL > we don't need to use full URL when make request
-axiosInstance.get('/comments').then((res) => showOutput(res))
+axiosInstance.get('/').then((res) => showOutput(res))
