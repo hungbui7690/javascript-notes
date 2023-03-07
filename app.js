@@ -1,24 +1,30 @@
 /*
-  Debounce P5
-  - now it works
+  Debounce P6
+  - another way to write this 
 
 */
 
 const btn = document.querySelector('.btn')
 
-const debounce = () => {
-  // (1)
+// (2) fn
+const debounce = (fn) => {
   let timeoutID
 
   return () => {
     console.log(timeoutID)
-    clearTimeout(timeoutID) // (2) this needs to be before setTimeout > clear out the last one
+    clearTimeout(timeoutID)
 
-    // (3)
     timeoutID = setTimeout(() => {
-      console.log('clicked ✈')
+      fn() // (3) calling fn
     }, 2000)
   }
 }
 
-btn.addEventListener('click', debounce())
+btn.addEventListener(
+  'click',
+
+  // (1)
+  debounce(() => {
+    console.log('clicked ✈')
+  })
+)
