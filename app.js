@@ -1,28 +1,29 @@
 /*
-  Axios P8: Custom Headers
-  - axios.post(url, body, options)
+  Axios P9: Transforming Request & Response
+
 */
 
-// (***)
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: 'sometoken', // add this config to headers when
-  },
+function transformResponse() {
+  const options = {
+    method: 'POST',
+    url: 'https://jsonplaceholder.typicode.com/todos',
+
+    // (1)
+    data: {
+      title: 'Hello World',
+    },
+
+    // (2) transform data to uppercase b4 sending it to server
+    transformResponse: axios.defaults.transformResponse.concat((data) => {
+      data.title = data.title.toUpperCase()
+      return data
+    }),
+  }
+
+  // (***)
+  axios(options).then((res) => showOutput(res))
 }
 
-function customHeaders() {
-  axios
-    .post(
-      'https://jsonplaceholder.typicode.com/todos',
-      {
-        title: 'New Todo',
-        completed: false,
-      },
-      config // (***) use config here
-    )
-    .then((res) => showOutput(res))
-    .catch((err) => console.error(err))
-}
-
-document.getElementById('headers').addEventListener('click', customHeaders)
+document
+  .getElementById('transform')
+  .addEventListener('click', transformResponse)
