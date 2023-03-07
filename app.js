@@ -1,22 +1,19 @@
 /*
-  Intersection Observer P3
-  - remove "show" for the first card in html
-
-  (***) as soon as 1px of the element is visible, add 'show' class
-
-  (***) test > scroll fast to see
+  Intersection Observer P4
+  - add threshold option
 */
 
 const cards = document.querySelectorAll('.card')
 
-const observer = new IntersectionObserver((entries) => {
-  // (1)
-  entries.forEach((entry) => {
-    entry.target.classList.toggle('show', entry.isIntersecting) // toggle based on condition: entry.isIntersecting
-  })
-})
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle('show', entry.isIntersecting) // toggle based on condition: entry.isIntersecting
+    })
+  },
+  { threshold: 0.8 }
+) // options > right now: if 80% of the element appears on the screen > add 'show'
 
-// (2)
 cards.forEach((card) => {
   observer.observe(card)
 })
