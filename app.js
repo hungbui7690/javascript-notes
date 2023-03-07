@@ -1,14 +1,17 @@
 /*
-  Axios P5: DELETE Method
+  Axios P7: Simultaneous Data
+  - axios.all()
 
 */
 
-// DELETE REQUEST: must have id > no need body
-function removeTodo() {
+// SIMULTANEOUS DATA
+function getData() {
   axios
-    .delete('https://jsonplaceholder.typicode.com/todos/1')
-    .then((res) => showOutput(res))
+    .all([
+      axios.get('https://jsonplaceholder.typicode.com/todos?_limit=5'),
+      axios.get('https://jsonplaceholder.typicode.com/posts?_limit=5'),
+    ])
+    .then(axios.spread((todos, posts) => showOutput(posts)))
     .catch((err) => console.error(err))
 }
-
-document.getElementById('delete').addEventListener('click', removeTodo)
+document.getElementById('sim').addEventListener('click', getData)
