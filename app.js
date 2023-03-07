@@ -1,8 +1,5 @@
 /*
-  Intersection Observer P8: Infinite Scrolling Example P1
-  > root option
-    - right now, it is the .card-container > and observer tracks all of its children 
-      > we can set it to anything we want 
+  Intersection Observer P8: Infinite Scrolling Example P2
 
 */
 
@@ -22,21 +19,22 @@ cards.forEach((card) => {
   observer.observe(card)
 })
 
-// (1)
-const lastCardObserver = new IntersectionObserver((entries) => {
-  const lastCard = entries[0]
+const lastCardObserver = new IntersectionObserver(
+  (entries) => {
+    const lastCard = entries[0]
+    if (!lastCard.isIntersecting) return
 
-  // (3)
-  if (!lastCard.isIntersecting) return
+    loadNewCards()
 
-  // (4)
-  loadNewCards()
-})
+    // (***) after loading new cards > last card is not the last card anymore > we need to reset
+    lastCardObserver.unobserve(lastCard.target)
+    lastCardObserver.observe(document.querySelector('.card:last-child'))
+  },
+  { rootMargin: '100px' } // (***) in case the network is slow when we fetching and load new data > this is to prevent
+)
 
-// (2)
 lastCardObserver.observe(document.querySelector('.card:last-child'))
 
-// (5)
 function loadNewCards() {
   for (let i = 0; i < 10; i++) {
     const card = document.createElement('div')
