@@ -1,16 +1,18 @@
 /*
-  Axios P3: GET Method
-  
+  Axios P4: POST Method
+  - success: 201
+
 */
 
-// (***) we add the param directly to URL
-function getTodos() {
+// POST REQUEST
+function addTodo() {
   axios
-    .get('https://jsonplaceholder.typicode.com/todos?_limit=5', {
-      timeout: 5000,
+    .post('https://jsonplaceholder.typicode.com/todos', {
+      title: 'New Todo',
+      completed: false,
     })
     .then((res) => showOutput(res))
     .catch((err) => console.error(err))
 }
 
-document.getElementById('get').addEventListener('click', getTodos)
+document.getElementById('post').addEventListener('click', addTodo)
