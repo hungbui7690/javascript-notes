@@ -1,18 +1,14 @@
 /*
-  Axios P5: PUT/PATCH Method
-  - success: 201
+  Axios P5: DELETE Method
 
 */
 
-// PUT/PATCH REQUEST: must have id + body
-function updateTodo() {
+// DELETE REQUEST: must have id > no need body
+function removeTodo() {
   axios
-    .patch('https://jsonplaceholder.typicode.com/todos/1', {
-      title: 'Updated Todo', // body
-      completed: true,
-    })
+    .delete('https://jsonplaceholder.typicode.com/todos/1')
     .then((res) => showOutput(res))
     .catch((err) => console.error(err))
 }
 
-document.getElementById('update').addEventListener('click', updateTodo)
+document.getElementById('delete').addEventListener('click', removeTodo)
