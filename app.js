@@ -1,25 +1,12 @@
 /*
-  Axios P15: Default Configs
+  Axios P16: Axios Instance
 
 */
 
-const AUTH_TOKEN = 'x9x9x9x9'
+// AXIOS INSTANCE
+const axiosInstance = axios.create({
+  baseURL: 'https://jsonplaceholder.typicode.com',
+})
 
-// (***) 3 lines below will be the defaults config when we send to server
-axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com'
-axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
-axios.defaults.headers.post['Content-Type'] =
-  'application/x-www-form-urlencoded'
-
-function addTodo() {
-  // because we setup baseURL above > we don't need to put full url
-  axios
-    .post('/todos', {
-      title: 'New Todo',
-      completed: false,
-    })
-    .then((res) => showOutput(res))
-    .catch((err) => console.error(err))
-}
-
-document.getElementById('post').addEventListener('click', addTodo)
+// when using baseURL > we don't need to use full URL when make request
+axiosInstance.get('/comments').then((res) => showOutput(res))

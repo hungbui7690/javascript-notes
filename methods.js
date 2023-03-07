@@ -7,8 +7,21 @@ function getTodos() {
     .then((res) => showOutput(res))
     .catch((err) => console.error(err))
 }
-
 document.getElementById('get').addEventListener('click', getTodos)
+
+// POST REQUEST
+function addTodo() {
+  // because we setup baseURL above > we don't need to put full url
+  axios
+    .post('/todos', {
+      title: 'New Todo',
+      completed: false,
+    })
+    .then((res) => showOutput(res))
+    .catch((err) => console.error(err))
+}
+
+document.getElementById('post').addEventListener('click', addTodo)
 
 // PUT/PATCH REQUEST: must have id + body
 function updateTodo() {
