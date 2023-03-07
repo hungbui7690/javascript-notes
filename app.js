@@ -1,18 +1,18 @@
 /*
-  Axios P4: POST Method
+  Axios P5: PUT/PATCH Method
   - success: 201
 
 */
 
-// POST REQUEST
-function addTodo() {
+// PUT/PATCH REQUEST: must have id + body
+function updateTodo() {
   axios
-    .post('https://jsonplaceholder.typicode.com/todos', {
-      title: 'New Todo',
-      completed: false,
+    .patch('https://jsonplaceholder.typicode.com/todos/1', {
+      title: 'Updated Todo', // body
+      completed: true,
     })
     .then((res) => showOutput(res))
     .catch((err) => console.error(err))
 }
 
-document.getElementById('post').addEventListener('click', addTodo)
+document.getElementById('update').addEventListener('click', updateTodo)
