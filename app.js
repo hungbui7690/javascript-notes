@@ -1,17 +1,28 @@
 /*
-  Axios P7: Simultaneous Data
-  - axios.all()
-
+  Axios P8: Custom Headers
+  - axios.post(url, body, options)
 */
 
-// SIMULTANEOUS DATA
-function getData() {
+// (***)
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: 'sometoken', // add this config to headers when
+  },
+}
+
+function customHeaders() {
   axios
-    .all([
-      axios.get('https://jsonplaceholder.typicode.com/todos?_limit=5'),
-      axios.get('https://jsonplaceholder.typicode.com/posts?_limit=5'),
-    ])
-    .then(axios.spread((todos, posts) => showOutput(posts)))
+    .post(
+      'https://jsonplaceholder.typicode.com/todos',
+      {
+        title: 'New Todo',
+        completed: false,
+      },
+      config // (***) use config here
+    )
+    .then((res) => showOutput(res))
     .catch((err) => console.error(err))
 }
-document.getElementById('sim').addEventListener('click', getData)
+
+document.getElementById('headers').addEventListener('click', customHeaders)
