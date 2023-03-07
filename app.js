@@ -1,6 +1,6 @@
 /*
-  Intersection Observer P4
-  - add threshold option
+  Intersection Observer P5: unobserve()
+
 */
 
 const cards = document.querySelectorAll('.card')
@@ -8,11 +8,14 @@ const cards = document.querySelectorAll('.card')
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
-      entry.target.classList.toggle('show', entry.isIntersecting) // toggle based on condition: entry.isIntersecting
+      entry.target.classList.toggle('show', entry.isIntersecting)
+
+      // (***) if the entry is shown > don't observer again > remove from observer
+      if (entry.isIntersecting) observer.unobserve(entry.target)
     })
   },
   { threshold: 0.8 }
-) // options > right now: if 80% of the element appears on the screen > add 'show'
+)
 
 cards.forEach((card) => {
   observer.observe(card)
