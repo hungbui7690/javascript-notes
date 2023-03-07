@@ -1,22 +1,25 @@
 /*
-  Axios P10: Error Handling 1
-  - url not correct
+  Axios P11: Error Handling 2
+  
+  - Using the validateStatus config option, you can define HTTP code(s) that should throw an error.
+    > in the example below: status code = 404 (wrong URL) > reject === throw error
 
 
-  (***) 3 cases: 
-    > Case 1: status code different than 200 range
-    > Case 2: request was made but no response from server
-    > Case 3: no request + no response
-
+  (***) Test Cases: 
+    > wrong url: log error
+    > correct url: show result
 */
 
 function errorHandling() {
   axios
-    .get('https://jsonplaceholder.typicode.com/todoss', {})
+    .get('https://jsonplaceholder.typicode.com/todoss', {
+      validateStatus: function (status) {
+        return status >= 200 && status < 300 // Resolve only if the status code from 200 to 299
+      },
+    })
     .then((res) => showOutput(res))
     .catch((err) => {
       if (err.response) {
-        // Server responded with a status other than 200 range
         console.log(err.response.data)
         console.log(err.response.status)
         console.log(err.response.headers)
@@ -25,10 +28,8 @@ function errorHandling() {
           alert('Error: Page Not Found')
         }
       } else if (err.request) {
-        // Request was made but no response
         console.error('> err.request', err.request)
       } else {
-        // Error
         console.error('> err.message', err.message)
       }
     })
