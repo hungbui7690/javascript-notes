@@ -1,23 +1,23 @@
 /*
-  Debounce P3:
-  - with the setup below, we cannot log 'click ✈' 
-  - note that the id keeps increasing after each click 
-  > reason because the timeout is clear right away, after we click
+  Debounce P4:
+  - at (1), we invoke the function right away 
+  - but we don't want to invoke > (2) === return a function 
+
 */
 
 const btn = document.querySelector('.btn')
 
+// (2)
 const debounce = () => {
-  // (1) save to variable
-  const timeoutID = setTimeout(() => {
-    console.log('clicked ✈')
-  }, 2000)
+  return () => {
+    const timeoutID = setTimeout(() => {
+      console.log('clicked ✈')
+    }, 2000)
 
-  console.log(timeoutID)
-
-  // (2) clear
-  clearTimeout(timeoutID)
-  console.log('hello')
+    console.log(timeoutID)
+    clearTimeout(timeoutID)
+  }
 }
 
-btn.addEventListener('click', debounce)
+// (1)
+btn.addEventListener('click', debounce())
