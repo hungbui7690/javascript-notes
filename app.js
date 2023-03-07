@@ -1,50 +1,25 @@
 /*
-  Axios P14: Intercepting Requests & Responses
-  - You can intercept requests or responses before they are handled by then or catch.
+  Axios P15: Default Configs
 
 */
 
-function getTodos() {
+const AUTH_TOKEN = 'x9x9x9x9'
+
+// (***) 3 lines below will be the defaults config when we send to server
+axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com'
+axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
+axios.defaults.headers.post['Content-Type'] =
+  'application/x-www-form-urlencoded'
+
+function addTodo() {
+  // because we setup baseURL above > we don't need to put full url
   axios
-    .get('https://jsonplaceholder.typicode.com/todos?_limit=5', {
-      timeout: 5000,
+    .post('/todos', {
+      title: 'New Todo',
+      completed: false,
     })
     .then((res) => showOutput(res))
     .catch((err) => console.error(err))
 }
 
-// (***) intercept request
-axios.interceptors.request.use(
-  (config) => {
-    // Do something before request is sent
-    console.log(
-      `${config.method.toUpperCase()} request sent to ${
-        config.url
-      } at ${new Date().getTime()}`
-    )
-
-    return config
-  },
-  (error) => {
-    // Do something with request error
-    return Promise.reject(error)
-  }
-)
-
-// (***) intercept response
-axios.interceptors.response.use(
-  (response) => {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    console.log(response)
-    response.data[0].userId = 999 // modify response data
-    return response
-  },
-  (error) => {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    return Promise.reject(error)
-  }
-)
-
-document.getElementById('get').addEventListener('click', getTodos)
+document.getElementById('post').addEventListener('click', addTodo)
