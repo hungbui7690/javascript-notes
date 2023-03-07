@@ -1,38 +1,30 @@
 /*
-  Axios P11: Error Handling 2
+  Axios P12: Cancellation 1
   
-  - Using the validateStatus config option, you can define HTTP code(s) that should throw an error.
-    > in the example below: status code = 404 (wrong URL) > reject === throw error
+  - Setting the timeout property in an axios call handles response related timeouts.
 
+  - In some cases (e.g. network connection becomes unavailable) an axios call would benefit from cancelling the connection early. Without cancellation, the axios call can hang until the parent code/stack times out (might be a few minutes in a server-side applications).
 
-  (***) Test Cases: 
-    > wrong url: log error
-    > correct url: show result
+  - To terminate an axios call you can use following methods:
+      + signal
+      + cancelToken (deprecated)
+  
+  - Combining timeout and cancellation method (e.g. signal) should cover response related timeouts AND connection related timeouts.
+
 */
 
-function errorHandling() {
-  axios
-    .get('https://jsonplaceholder.typicode.com/todoss', {
-      validateStatus: function (status) {
-        return status >= 200 && status < 300 // Resolve only if the status code from 200 to 299
-      },
-    })
-    .then((res) => showOutput(res))
-    .catch((err) => {
-      if (err.response) {
-        console.log(err.response.data)
-        console.log(err.response.status)
-        console.log(err.response.headers)
+const controller = new AbortController()
 
-        if (err.response.status === 404) {
-          alert('Error: Page Not Found')
-        }
-      } else if (err.request) {
-        console.error('> err.request', err.request)
-      } else {
-        console.error('> err.message', err.message)
-      }
+function cancellation() {
+  axios
+    .get('/foo/bar', {
+      signal: controller.signal,
     })
+    .then(function (response) {
+      //...
+    })
+  // cancel the request
+  controller.abort()
 }
 
-document.getElementById('error').addEventListener('click', errorHandling)
+document.getElementById('cancel').addEventListener('click', cancellation)
